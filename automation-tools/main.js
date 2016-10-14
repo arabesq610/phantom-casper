@@ -32,10 +32,14 @@
 
     // console.log(tests[testIndex].name, tests[testIndex].url, tests[testIndex].screenshotOutputLocation);
 
-    // Get the page title plus our fancy message
+    // Output the page title
     casper.start(tests[testIndex].url, function () {
-        var title = this.getTitle();
-        console.log(title);
+        // Note `this` refers to the casper object inside the remote page context
+
+        // Log some helpful info
+        console.log(this.getTitle());
+        console.log(this.getCurrentUrl());
+
         // this.capture(tests[testIndex].screenshotOutputLocation);
     });
 
