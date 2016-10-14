@@ -34,9 +34,8 @@
 
     // Get the page title plus our fancy message
     casper.start(tests[testIndex].url, function () {
-        this.evaluate(function () {
-            console.log(document.title);
-        });
+        var title = this.getTitle();
+        console.log(title);
         // this.capture(tests[testIndex].screenshotOutputLocation);
     });
 
