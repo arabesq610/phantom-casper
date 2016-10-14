@@ -3,11 +3,13 @@
 
     var casper,
         tests,
-        testIndex = 1;
+        testIndex = 1,
+        message = 'OMG';
 
-
+    // Bring the Casper
     casper = require('casper').create(); // Why we have to run the create immediately?
 
+    // Create our tests
     tests = [{
         name: 'google',
         url: 'https://www.google.com/',
@@ -21,13 +23,13 @@
 
     // console.log(tests[testIndex].name, tests[testIndex].url, tests[testIndex].screenshotOutputLocation);
 
-    // Generate the screenshot
+    // Get the page title plus our fancy message
     casper.start(tests[testIndex].url, function () {
-        var title = this.evaluate(function () {
-            return document.title;
-        });
+        var title = this.evaluate(function (message) {
+            return message + ' ' + document.title;
+        }, message);
 
-        casper.echo('page title is ' + title);
+        casper.echo('Page title is ' + title);
         // this.capture(tests[testIndex].screenshotOutputLocation);
     });
 
