@@ -7,7 +7,7 @@
         fs,
         evalObj,
         tests,
-        testIndex = 2,
+        testIndex = 1,
         casperSettingsObj = null;
     /* { // One option is to override the UA, but this won't get around detecation of headless browsers (i.e., PhantomJS, or 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) CasperJS/1.1.0-beta5+PhantomJS/2.1.1 Safari/538.1')
         pageSettings: {
@@ -34,7 +34,11 @@
     tests = [{
         name: 'google',
         url: 'https://www.google.com/',
-        screenshotOutputLocation: './output/google.png'
+        screenshotOutputLocation: './output/google.com.png'
+    }, {
+        name: 'google',
+        url: 'http://www.google.ca/',
+        screenshotOutputLocation: './output/google.ca.png'
     }, {
         name: 'eliselinn',
         url: 'http://www.eliselinn.com/',
@@ -51,7 +55,9 @@
 
     // Output the page title
     casper.start(tests[testIndex].url, function () {
-        console.log('hi');
+        this.fill('form', {
+            q: 'hello world!'
+        }, true);
     });
     casper.wait(1000, function () {
         // Note `this` refers to the casper object inside the remote page context
@@ -60,20 +66,42 @@
 
 
         evalObj = this.evaluate(function () {
-            var username,
-                password;
+            var i,
+                returnElement,
+                targetElements = document.querySelectorAll('.g h3 a'),
+                data = [],
+                e,
+                link,
+                title;
+            for (i = 0; i < targetElements.length; i += 1) {
+                e = targetElements[i];
 
-            username = document.getElementById('email');
-            password = document.getElementById('password');
+                link = e.getAttribute('href');
+                title = e.text;
+                returnElement = {
+                    link: link,
+                    title: title
+                };
+                data.push(returnElement);
+            }
+            return data;
+
+
+
+            // var username,
+            //     password;
+
+            // username = document.getElementById('email');
+            // password = document.getElementById('password');
 
             // This allows us to see the UA which we can use to emulate in chrome and see the page as it's rendered to us while running as PhantomJS
             // console.log(window.navigator.userAgent);
 
             // Return something useful
-            return {
-                username: username,
-                password: password
-            };
+            // return {
+            //     username: username,
+            //     password: password
+            // };
         });
 
         console.log(evalObj);
