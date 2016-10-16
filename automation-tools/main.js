@@ -56,7 +56,7 @@
     // Output the page title
     casper.start(tests[testIndex].url, function () {
         this.fill('form', {
-            q: 'hello world!'
+            q: 'omfg'
         }, true);
     });
     casper.wait(1000, function () {
@@ -104,7 +104,7 @@
             // };
         });
 
-        console.log(evalObj);
+        // console.log(evalObj);
 
 
     });
