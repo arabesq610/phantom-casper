@@ -1,16 +1,38 @@
-var casper = require('casper').create({
-    verbose: true
-});
-var urls = ['http://www.google.ca', 'http://www.bing.ca', 'http://packtpub.com'];
-var viewportSizes = [480, 720, 1200]; // widths
-var counter = 0;
+var casper,
+    config,
+    counter,
+    data,
+    fs,
+    urls,
+    viewportSizes;
 
-// console.log(urls);
-console.log(viewportSizes);
+// Require
+casper = require('casper')
+    .create({
+        verbose: true
+    });
 
+fs = require('fs');
+
+// Check
+// if (fs.exists('./config.json') && fs.exists('./data.json')) {
+//     data = require('./data.json');
+//     config = require('./counter.json');
+// } else {
+//     casper.exit();
+// }
+
+// Init
+urls = ["http://www.google.ca", "http://www.bing.ca", "http://packtpub.com"]; //data.urls;
+viewportSizes = [480, 720, 1200]; //config.viewportSizes;
+
+
+// Run
+casper.start();
+
+counter = 0;
 
 casper
-    .start()
     .repeat(viewportSizes.length, function () {
         'use strict';
         var viewportSize = viewportSizes[counter];
